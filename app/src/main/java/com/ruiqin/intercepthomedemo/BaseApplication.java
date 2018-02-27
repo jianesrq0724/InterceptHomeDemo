@@ -22,7 +22,7 @@ public class BaseApplication extends Application {
 
     private Context context;
 
-    public static int appCount;
+    public static int activityAount;
 
     /**
      * onCreate是一个回调接口，android系统会在应用程序启动的时候，在任何应用程序组件（activity、服务、
@@ -35,17 +35,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         context = this;
         //注册自己的Activity的生命周期回调接口。
-//        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        if (level >= TRIM_MEMORY_UI_HIDDEN) {
-            Toast.makeText(getApplicationContext(), "切入后台", Toast.LENGTH_SHORT).show();
-            backForeground();
-        }
-    }
 
     @Override
     public void onTerminate() {
@@ -68,7 +60,7 @@ public class BaseApplication extends Application {
         public void onActivityStarted(Activity activity) {
             Log.e(TAG, "onActivityStarted.");
 
-            appCount++;
+            activityAount++;
         }
 
         @Override
@@ -87,8 +79,8 @@ public class BaseApplication extends Application {
 
         @Override
         public void onActivityStopped(Activity activity) {
-            appCount--;
-            if (appCount == 0) {
+            activityAount--;
+            if (activityAount == 0) {
                 Toast.makeText(getApplicationContext(), "切入后台", Toast.LENGTH_SHORT).show();
                 backForeground();
             }
