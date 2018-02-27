@@ -35,7 +35,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         context = this;
         //注册自己的Activity的生命周期回调接口。
-        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+//        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
 
