@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -39,13 +38,6 @@ public class BaseApplication extends Application {
     }
 
 
-    @Override
-    public void onTerminate() {
-//        //注销这个接口。
-//        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
-        super.onTerminate();
-    }
-
     private static final String TAG = "MyApplication";
 
     private ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
@@ -68,12 +60,9 @@ public class BaseApplication extends Application {
             Log.e(TAG, "onActivityResumed.");
         }
 
-        long pauseTime;
 
         @Override
         public void onActivityPaused(Activity activity) {
-
-            pauseTime = System.currentTimeMillis();
             Log.e(TAG, "onActivityPaused.");
         }
 
@@ -81,7 +70,6 @@ public class BaseApplication extends Application {
         public void onActivityStopped(Activity activity) {
             activityAount--;
             if (activityAount == 0) {
-                Toast.makeText(getApplicationContext(), "切入后台", Toast.LENGTH_SHORT).show();
                 backForeground();
             }
         }
@@ -107,7 +95,8 @@ public class BaseApplication extends Application {
             if (rti.topActivity.getPackageName().equals(context.getPackageName())) {
                 try {
                     Intent resultIntent = new Intent(context, Class.forName(rti.topActivity.getClassName()));
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                    resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, 0);
                     pendingIntent.send();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
