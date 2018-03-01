@@ -1,8 +1,8 @@
 package com.ruiqin.intercepthomedemo;
 
 import android.content.Intent;
+import android.device.DeviceManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class MainActivity extends BaseActivity {
@@ -18,6 +18,16 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, SecondActivity.class));
             }
         });
+
+        try {
+            new DeviceManager().enableHomeKey(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+
+    @Override
+    public void onBackPressed() {
+    }
 }
