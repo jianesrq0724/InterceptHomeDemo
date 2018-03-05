@@ -5,6 +5,8 @@ import android.device.DeviceManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.speedata.postest.PosC;
+
 public class MainActivity extends BaseActivity {
 
     @Override
@@ -24,6 +26,8 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        PosC.home(false, this);
     }
 
 
